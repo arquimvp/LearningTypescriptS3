@@ -1,54 +1,71 @@
 /*
- Propiedades publicas, privadas y protegidas o en POO "Modificadores de acceso".
+ Metodos publicos, privados y protegidos.
+ Al igual que con las propiedades de una clase, es el alcance de vision de nuestro metodo o funcion. 
 
- Modificadores de acceso: se encargan de controlar el lugar donde se pueden ser 
- accesadas las propiedades o metodos de nuestras clases
-
-En Javascript es5 eso no existe, todos los metodos y propiedades son publicos.
 */
 
 class Caricatura {
 
-  //Public: si no se especifica por defecto es publico. Da igual si lo pones asi, pongamoslo.
   public categoria: string;
-  
-  //Protected: 
   protected nombre: string;
-
-  //Private
   private estrellas: number;
   private familiar: boolean;
 
   constructor(c: string, n: string, e: number, f: boolean) {
 
-    //This hace referencia al contexto de la clase.
     this.categoria = c;
     this.nombre = n;
     this.estrellas = e;
     this.familiar = f;
 
-    //Aqui si puedes modificar cualquier propiedad de la clase aunque esten definidos como protected o private.
-
   }
+
+  //Metodo public: accesible desde cualquier parte de la aplicaicion:
+  public imprimeCaricatura():void{
+    let description : string = `${this.nombre} ${this.categoria}`;
+    console.log(description);
+  }
+
+  //Ahora creamos un metodo private: accesible desde la misma clase unicamente:
+  private cambiarCategoria(categoria? : string) : boolean {
+    
+    if(categoria){
+      this.categoria = categoria;
+      return true;
+    }else{
+      return false;
+    }
+    //Aqui se debe observar que typescript al igual que otros lenguajes valida que en cualquier caso se este retornando algo.
+    //Por esa razon se debe poner un return en el else del if.
+  }
+
+  //Este metodo publico, es la forma, puente, canal etc, a traves del cual puedo ejecutar un metodo privado desde una instancia de clase externa.
+  public cambiaCategoriaConMetodoPublico(categoria? : string): boolean{
+    return this.cambiarCategoria(categoria);
+  }
+
 }
 
+
+// Inatanciamos un objeto drafonBZ a apartir de la clase Caricatura:
 let dragonBZ : Caricatura = new Caricatura('niños 12-14', 'dragon ball z', 5, true);
 
-//Aqui podemos ver como actua el modificador "public", me permite cambiar la categoria de mi caricatura.
-//Este modificador permite accesar desde cualquier parte de la aplicacion donde se tenga la clase definida.
-dragonBZ.categoria = 'adultos';
+//Imprimimos el objeto
+console.log(dragonBZ);
 
-//Aqui podemos ver como actua el modificador "protected": yo no puedo cambiar el nombre fuera de la clase.
-//Este modificador solo permite cambiar las propiedades dentro de su clase o sus subclases (herencias, clases hijas).
-dragonBZ.nombre = 'pedro';
+//Aqui mando a llamar al metodo publico de mi clase Caricatura:
+dragonBZ.imprimeCaricatura();
 
-
-//Aqui podemos ver como actua el modificador "private", me permite cambiar el valor de las propiedades solo dentro
-//de las clases (dentro del cosntructor o alguna funcion de la clase), pero no en sus clases hijas o herencias.
-dragonBZ.familiar = false;
+//Aqui intento mandar llamar al metodo privado "cambiarCategoria" pero no me lo permite por ser private y limitarse a su clase.
+//dragonBZ.cambiarCategoria('');
 
 
+//Aqui mandaré a llamar a un metodo publico de la clase Caricatura, a su vez ese metodo madara a llamar al metodo
+//que no pude llamar debido a que esta como private.
+
+console.log(dragonBZ.cambiaCategoriaConMetodoPublico('princesas')); // true
 console.log(dragonBZ);
 
 
 
+//Los metodos protegidos, lo revisamos en el tema de Herencia en typescript.
