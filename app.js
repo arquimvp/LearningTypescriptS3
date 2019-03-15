@@ -1,38 +1,12 @@
 "use strict";
 /*
-  Clases y contructores en typescript.
-  Las clases en typescript son muy parecidas en su definicion a las clases en ES6,
-  pero en su comportamiento, propiedades y metodos es mas parecido a java, C#, vb etc.
+ Propiedades publicas, privadas y protegidas o en POO "Modificadores de acceso".
 
-  Constructor: Es una simple funcion que se ejecuta cuando se crea una nueva instancia de determinada clase.
-  Me sirve para sobreescribir variables
-  p.e:
+ Modificadores de acceso: se encargan de controlar el lugar donde se pueden ser
+ accesadas las propiedades o metodos de nuestras clases
 
-  let peli: Pelicula = new Pelicula();
-
-  Los parentesis depues de pelicula, indican una funcion.
-
+En Javascript es5 eso no existe, todos los metodos y propiedades son publicos.
 */
-/*
-  - Es importante saber que no se puede usar "let" directamente dentro de una clase, ese tipo de
-    defincion solo va dentro de metodos o funciones.
-  - Tambien se debe tener en cuenta que si la clase no cuenta con un constructor será necesario
-    asignar las variables (propiedades) inmediatamente en su definicion.
-  - Si cuentas con un constructor puedes asignar las variables directo en la declaracion o en el constructor.
-*/
-//Definicion de una clase basica en typescript sin constructor, las propiedades de la clase se asignan mientras se declaran.
-var Pelicula = /** @class */ (function () {
-    function Pelicula() {
-        this.categoria = '';
-        this.nombre = '';
-        this.estrellas = 2;
-        this.familiar = true;
-    }
-    return Pelicula;
-}());
-var drStrange = new Pelicula();
-console.log(drStrange);
-//Definicion de una clase basica con constructor, el constructor reemplazara las propiedades de la clase.
 var Caricatura = /** @class */ (function () {
     function Caricatura(c, n, e, f) {
         //This hace referencia al contexto de la clase.
@@ -44,4 +18,13 @@ var Caricatura = /** @class */ (function () {
     return Caricatura;
 }());
 var dragonBZ = new Caricatura('niños 12-14', 'dragon ball z', 5, true);
+//Aqui podemos ver como actua el modificador "public", me permite cambiar la categoria de mi caricatura.
+//Este modificador permite accesar desde cualquier parte de la aplicacion donde se tenga la clase definida.
+dragonBZ.categoria = 'adultos';
+//Aqui podemos ver como actua el modificador "protected": yo no puedo cambiar el nombre fuera de la clase.
+//Este modificador solo permite cambiar las propiedades dentro de su clase o sus subclases (herencias, clases hijas).
+dragonBZ.nombre = 'pedro';
+//Aqui podemos ver como actua el modificador "private", me permite cambiar el valor de las propiedades solo dentro
+//de las clases (dentro del cosntructor o alguna funcion de la clase), pero no en sus clases hijas o herencias.
+dragonBZ.familiar = false;
 console.log(dragonBZ);
