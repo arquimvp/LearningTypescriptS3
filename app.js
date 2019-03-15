@@ -1,49 +1,81 @@
 "use strict";
 /*
- Metodos publicos, privados y protegidos.
- Al igual que con las propiedades de una clase, es el alcance de vision de nuestro metodo o funcion.
-
-*/
-var Caricatura = /** @class */ (function () {
-    function Caricatura(c, n, e, f) {
-        this.categoria = c;
-        this.nombre = n;
-        this.estrellas = e;
-        this.familiar = f;
+ Herencia y metodos protegidos.
+ */
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+//Abreviacion de propiedades en clases: Mucho codigo => menos codigo
+//1. Mucho codigo:
+var Desarrollador = /** @class */ (function () {
+    function Desarrollador(nombre, perfil) {
+        this.nombre = nombre;
+        this.perfil = perfil;
     }
-    //Metodo public: accesible desde cualquier parte de la aplicaicion:
-    Caricatura.prototype.imprimeCaricatura = function () {
-        var description = this.nombre + " " + this.categoria;
-        console.log(description);
-    };
-    //Ahora creamos un metodo private: accesible desde la misma clase unicamente:
-    Caricatura.prototype.cambiarCategoria = function (categoria) {
-        if (categoria) {
-            this.categoria = categoria;
-            return true;
-        }
-        else {
-            return false;
-        }
-        //Aqui se debe observar que typescript al igual que otros lenguajes valida que en cualquier caso se este retornando algo.
-        //Por esa razon se debe poner un return en el else del if.
-    };
-    //Este metodo publico, es la forma, puente, canal etc, a traves del cual puedo ejecutar un metodo privado desde una instancia de clase externa.
-    Caricatura.prototype.cambiaCategoriaConMetodoPublico = function (categoria) {
-        return this.cambiarCategoria(categoria);
-    };
-    return Caricatura;
+    return Desarrollador;
 }());
-// Inatanciamos un objeto drafonBZ a apartir de la clase Caricatura:
-var dragonBZ = new Caricatura('niños 12-14', 'dragon ball z', 5, true);
-//Imprimimos el objeto
-console.log(dragonBZ);
-//Aqui mando a llamar al metodo publico de mi clase Caricatura:
-dragonBZ.imprimeCaricatura();
-//Aqui intento mandar llamar al metodo privado "cambiarCategoria" pero no me lo permite por ser private y limitarse a su clase.
-//dragonBZ.cambiarCategoria('');
-//Aqui mandaré a llamar a un metodo publico de la clase Caricatura, a su vez ese metodo madara a llamar al metodo
-//que no pude llamar debido a que esta como private.
-console.log(dragonBZ.cambiaCategoriaConMetodoPublico('princesas')); // true
-console.log(dragonBZ);
-//Los metodos protegidos, lo revisamos en el tema de Herencia en typescript.
+//2. Menos codigo:
+var Developer = /** @class */ (function () {
+    //De esta manera se pondran automaticamente las propiedades de name y profile a cualquier clase o variable del tipo Developer
+    function Developer(name, profile) {
+        // 9. Descomentar despues de usar el super en la clase Frontend:
+        //console.log('constructor de Developer invocado en segundo termino');
+        this.name = name;
+        this.profile = profile;
+    }
+    return Developer;
+}());
+var ironDev = new Developer('IronDev', 'Ionic');
+console.log(ironDev);
+/*****************************************************************************************************************************
+ * HERENCIA: Darle las propiedades y metodos a las clases hijas.
+ */
+// 3. Aqui la clase Frontend extiende (hereda) de Developer:
+var Frontend = /** @class */ (function (_super) {
+    __extends(Frontend, _super);
+    function Frontend() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return Frontend;
+}(Developer));
+//4. Creo una nueva instancia de Frontend (ironFront):
+//  en este caso es importante observar que estoy utilizando el cosntructor de Developer, dado que Frontend no tiene constructor.
+//  Si le quito los parametros a Frontend, mandaria error:
+//5. Error:
+//  let ironFront : Frontend = new Frontend();
+//6. Correcto: (aunque toma el constructor de la clase padre o superclase, dado que Frontend no cuenta con su propio constructor):
+var ironFront = new Frontend("Ironfront", 'flutter');
+console.log(ironFront);
+//7. Una vez que has codificado hasta aqui, es hora de implementar el llamdo super en el constructor de la clase "Frontend":
+//Ve y descomenta el codigo del constructor en clase Frontend
+/*
+  10 - Crearemos un metodo en la clase Developer para poder heredarlo a la clase Frontend:
+  ve al codigo de la clase Developer.
+  Una vez descomentado el metodo de getName, yo puedo ejecutar el metodo a traves de ironFront!!!
+*/
+//console.log(ironFront.getName());
+/**
+ * 12. PROTECTED!!! Cambiar el metodo getName a protected en la clase Developer.
+ * esto con la finalidad de poder acceder a un metodo protected desde una subclase que es una de las 2 unicas formas
+ * de accesar a ese tipo de metodos protegidos, llamandolos desde la misma clase o subclases.
+ *
+ */
+/**
+ * 13. Ahora en mi clase Frontend voy  generar una metodo publico ('getNombre') que va a llamar al metodo protected (getName)
+ * de la clase Developer.
+ * Esto lo puedo realizar agregando el super() en el metodo getNombre de la clase Frontend:
+ *
+ *
+ *
+ *
+ */ 
