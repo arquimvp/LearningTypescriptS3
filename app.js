@@ -1,66 +1,47 @@
-//Clases en ES6  (NO TYPESCRIPT):
-//Recuerden que estamos trabajando en un archivo .js y aqui se permiten las asignaciones sin haber sido declaradas previamente.
-
-class Camioneta{
-
-  constructor(marca, traccion){
-    this.marca = marca;
-    this.traccion = traccion;
-  }
-}
-
+"use strict";
 /*
-Una clase puede heredar los metodos y propiedades de otra clase.
-En ES6 se utiliza la palabra reservada "extends" para la herencia.
+  Clases y contructores en typescript.
+  Las clases en typescript son muy parecidas en su definicion a las clases en ES6,
+  pero en su comportamiento, propiedades y metodos es mas parecido a java, C#, vb etc.
+
+  Constructor: Es una simple funcion que se ejecuta cuando se crea una nueva instancia de determinada clase.
+  Me sirve para sobreescribir variables
+  p.e:
+
+  let peli: Pelicula = new Pelicula();
+
+  Los parentesis depues de pelicula, indican una funcion.
+
 */
-
-/** en el siguiente ejemplo solo heredo de Camioneta y automaticamente tengo acceso a sus propiedades */
-class Pickup extends Camioneta {
-
-}
-
-
-//En este caso se puede instanciar un objeto a partir de una clase y argumentando los parametros.
-let f150 = new Camioneta("ford","delantera");
-
-/*En este caso se instancia de la superClase Camioneta, inicializando los valores que correponden al contrato 
-  de la clase Camioneta y automaticamente los asimila acorde al contrato de la superclase "Camioneta".
+/*
+  - Es importante saber que no se puede usar "let" directamente dentro de una clase, ese tipo de
+    defincion solo va dentro de metodos o funciones.
+  - Tambien se debe tener en cuenta que si la clase no cuenta con un constructor será necesario
+    asignar las variables (propiedades) inmediatamente en su definicion.
+  - Si cuentas con un constructor puedes asignar las variables directo en la declaracion o en el constructor.
 */
-let acadia = new Pickup('pilot','integral');
-
-/*Se puede instanciar sin tener que enviar los parametros de la super clase, aunque imprimiria undefined para los parametros*/
-let frontier = new Pickup();
-
-
-console.log(f150);
-console.log(acadia);
-console.log(frontier);
-
-
-/** Si requiero agregar propiedades en una nueva clase que herede de Camioneta
- * Necesitare utlizar "super" la cual me servira para inicializar el contructor de la superclase,
- * Si no utilizo esta palabra, no podre agregar mas propiedades a mi nueva clase derivada.
- */
-
- //Definicion de una clase Suv con "super" para poder acceder al constructor de mi superclase:
-
-class Suv extends Camioneta {
-  //"super" dentro del constructor:
-  constructor(m,t,b){
-
-      /*La palabra super me permite accesar al constructor de la clase padre, 
-        pero le debo enviar todas las propiedades existentes en la superclase:
-      */
-      super(m,t,b);
-      
-      //Ahora si puedo agregar mis propiedades necesarias:
-    this.blindada = b;
-     
-  }
-}
-
-
-let terrain = new Suv('gmc','awd',true);
-
-
-console.log(terrain);
+//Definicion de una clase basica en typescript sin constructor, las propiedades de la clase se asignan mientras se declaran.
+var Pelicula = /** @class */ (function () {
+    function Pelicula() {
+        this.categoria = '';
+        this.nombre = '';
+        this.estrellas = 2;
+        this.familiar = true;
+    }
+    return Pelicula;
+}());
+var drStrange = new Pelicula();
+console.log(drStrange);
+//Definicion de una clase basica con constructor, el constructor reemplazara las propiedades de la clase.
+var Caricatura = /** @class */ (function () {
+    function Caricatura(c, n, e, f) {
+        //This hace referencia al contexto de la clase.
+        this.categoria = c;
+        this.nombre = n;
+        this.estrellas = e;
+        this.familiar = f;
+    }
+    return Caricatura;
+}());
+var dragonBZ = new Caricatura('niños 12-14', 'dragon ball z', 5, true);
+console.log(dragonBZ);
