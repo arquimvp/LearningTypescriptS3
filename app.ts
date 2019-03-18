@@ -1,37 +1,61 @@
 /*
- Metodos y propiedades estáticos:
-
-  Las propiedades y metodos estaticos son aquellos que podemos llamar sin necesidad de instanciar la clase.
-
+ gets y sets: son una manera de accesar a las propiedades de una manera controlada.
  */
 
+ 
+/**
+ * Cuando se utilizan gets y sets, por convencion el nombre de las propiedades de una clase se recomienda utilizar el prefijo _
+ * Esto es debido a que el nombre del get o set debe ser diferente al nombre de la propiedad.
+ * Todos los gets y sets son publicos, aunque podemos omitir el modificador.
+ * 
+ * @class Developer
+ */
+class Developer {
 
- class Developer {
+  private _perfil:string;
 
-  //Las propiedades estaticas no son accesibles en una instancia. Solo son accesibles haciendo referencia a la clase directamente.
-  //son como una especia de contantes.
-  static perfil : string = 'fullstack';
-  
-  vidaSocial:boolean = true;
+  constructor(perfil:string = ''){
+    this._perfil = perfil;
+  }
 
-  constructor(){
+  //metodo get  
+  public get perfil() : string {
+    
+    if (this._perfil) {
+      return this._perfil;  
+    }else{
+      return "el desarrollador no tiene un perfil";
+    }
     
   }
 
-  static crearDeveloper(){
-    return new Developer();
+  //metodo set
+  public set perfil(perfil : string) {
+
+    if (perfil === 'javaDev') {
+      throw new Error('La clase Developer no admite javaDev');
+    }
+
+    this._perfil = perfil;
   }
- }
+  
+}
+
+let devIos : Developer = new Developer('ios');
+
+console.log(devIos.perfil);
+
+devIos.perfil = 'android';
+
+console.log(devIos.perfil);
 
 
-//Aqui estoy llamando a la propiedad perfil de la clase sin necsidad de instanciar.
- console.log(Developer.perfil);
- 
-// Aqui puedo instanciar apartir de un metodo estatico:
- let devFS = Developer.crearDeveloper();
+//tú puedes omitir usar gets y sets y puedes utilizar funciones comunes, sin embargo, utilizando una funcion comun, 
+//utilizarias el set así:
 
- console.log(devFS);
+//devIos.setPerfil('javaDev');
 
- let dev09 = new Developer();
+//en lugar de:
 
- console.log(dev09);
+devIos.perfil = 'javaDev';
+console.log(devIos.perfil);
