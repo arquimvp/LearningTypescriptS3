@@ -1,39 +1,74 @@
 "use strict";
-/*
- Clases Abstractas: Son aquellas clases que no se pueden instanciar. Solo puedo heredarlas a otras clases.
- al declararlas se debe anteponer la palabra reservada abstract
- */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var Engineer = /** @class */ (function () {
-    function Engineer(name, profile) {
-        this.name = name;
-        this.profile = profile;
+/**
+ * Interfaces:
+ *    Las interfaces son contratos, son reglas para tipos de datos u objetos.
+ *    Definen lo que esta dentro de un objeto (No es una instancia de una clase).
+ *    Las interfaces solo existen en typescript, no se traspila nada en javascript.
+ *
+*/
+// Sin interfaz (descomentar):
+function encode(developer) {
+    console.log("programando en: " + developer.language);
+}
+var developer = {
+    name: 'Roberto',
+    language: 'typescript'
+};
+encode(developer);
+var prueba;
+prueba = {
+    otroY: 'f',
+    x: 6,
+    y: 6,
+    o: 3,
+    t: 2
+};
+var prueba2;
+prueba2 = {
+    otroX: {
+        y: 'ff',
+        x: 5
     }
-    return Engineer;
+};
+//podemos acceder a la propiedad x:
+prueba2.otroX.x;
+function enviarDoctor(doctor) {
+    console.log("enviando a: " + doctor.especialidad);
+    doctor.opera('alejandra');
+}
+var newDoc = {
+    especialidad: 'otorrinolaringologo',
+    opera: function (p) {
+        console.log("ha operado a " + p);
+    }
+};
+enviarDoctor(newDoc);
+//En este caso la clase Camioneta se ve obligada a implementar todo el contrato de la interfaz Vehiculo y adicionalmente
+//podemos agregar mas propiedades a la clase.
+//si se hereda de otra clase no es necesario implementar todas sus propiedades y metodos.
+var Camioneta = /** @class */ (function () {
+    function Camioneta(motorizacion, marca, categoria, hibrido) {
+        this.motorizacion = motorizacion;
+        this.marca = marca;
+        this.categoria = categoria;
+        this.hibrido = hibrido;
+        this.plazas = 4;
+    }
+    Camioneta.prototype.correr = function (kmph) {
+        console.log("corriendo a: " + kmph);
+    };
+    ;
+    return Camioneta;
 }());
-//Con una clase abstracta no puedo hacer lo siguiente:
-//let designer = new Engineer('juan', 'designer');
-//Pero si puedo hacer lo siguiente:
-var Developer = /** @class */ (function (_super) {
-    __extends(Developer, _super);
-    function Developer() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return Developer;
-}(Engineer));
-//Ahora puedo instanciar a Developer:
-var ux = new Developer('mirna', 'mireles');
-console.log(ux);
+var patriot = new Camioneta("gasolina", 'jeep', 'familiar', false);
+var sum;
+//con declaracion de funcion convencional:
+sum = function (a, b) {
+    return a + b;
+};
+var subs;
+//con declaracion de funcion de flecha:
+subs = function (a, b) { return a - b; };
+console.log(sum(3, 5)); //8
+console.log(subs(3, 5)); //-2
 //# sourceMappingURL=app.js.map
