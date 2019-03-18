@@ -1,49 +1,39 @@
 "use strict";
 /*
- gets y sets: son una manera de accesar a las propiedades de una manera controlada.
+ Clases Abstractas: Son aquellas clases que no se pueden instanciar. Solo puedo heredarlas a otras clases.
+ al declararlas se debe anteponer la palabra reservada abstract
  */
-/**
- * Cuando se utilizan gets y sets, por convencion el nombre de las propiedades de una clase se recomienda utilizar el prefijo _
- * Esto es debido a que el nombre del get o set debe ser diferente al nombre de la propiedad.
- * Todos los gets y sets son publicos, aunque podemos omitir el modificador.
- *
- * @class Developer
- */
-var Developer = /** @class */ (function () {
-    function Developer(perfil) {
-        if (perfil === void 0) { perfil = ''; }
-        this._perfil = perfil;
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Engineer = /** @class */ (function () {
+    function Engineer(name, profile) {
+        this.name = name;
+        this.profile = profile;
     }
-    Object.defineProperty(Developer.prototype, "perfil", {
-        //metodo get  
-        get: function () {
-            if (this._perfil) {
-                return this._perfil;
-            }
-            else {
-                return "el desarrollador no tiene un perfil";
-            }
-        },
-        //metodo set
-        set: function (perfil) {
-            if (perfil === 'javaDev') {
-                throw new Error('La clase Developer no admite javaDev');
-            }
-            this._perfil = perfil;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return Developer;
+    return Engineer;
 }());
-var devIos = new Developer('ios');
-console.log(devIos.perfil);
-devIos.perfil = 'android';
-console.log(devIos.perfil);
-//tú puedes omitir usar gets y sets y puedes utilizar funciones comunes, sin embargo, utilizando una funcion comun, 
-//utilizarias el set así:
-//devIos.setPerfil('javaDev');
-//en lugar de:
-devIos.perfil = 'javaDev';
-console.log(devIos.perfil);
+//Con una clase abstracta no puedo hacer lo siguiente:
+//let designer = new Engineer('juan', 'designer');
+//Pero si puedo hacer lo siguiente:
+var Developer = /** @class */ (function (_super) {
+    __extends(Developer, _super);
+    function Developer() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return Developer;
+}(Engineer));
+//Ahora puedo instanciar a Developer:
+var ux = new Developer('mirna', 'mireles');
+console.log(ux);
 //# sourceMappingURL=app.js.map
